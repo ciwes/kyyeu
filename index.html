@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Mời Kỷ Yếu - Phong Lê</title> <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <div class="container">
+        
+        <div id="page1" class="page active">
+            <div class="decorative-frame">
+                <div class="badge">EST. 2023 - 2026</div>
+                <h1>Class of 12A2</h1> 
+                <div class="separator"></div>
+                <p class="quote">"Thanh xuân như một cơn mưa rào..."</p>
+                
+                <div class="input-group">
+                    <input type="text" id="access-code" placeholder="NHẬP MÃ CÁ NHÂN" autocomplete="off">
+                    <button class="btn" onclick="checkCode()">Mở Lời Mời</button>
+                </div>
+                
+                <div id="error" class="error-msg">Mã không đúng, hãy thử lại!</div>
+            </div>
+        </div>
+
+        <div id="page2" class="page">
+            <div class="decorative-frame">
+                <div class="badge">FROM: PHONG LÊ</div> 
+                <h1 id="guest-name">Gửi Bạn</h1>
+                <div class="separator"></div>
+                <div class="invitation-text">
+                    <p id="personal-msg">Loading...</p>
+                </div>
+                <button class="btn" onclick="nextPage(2)">Xem Lịch Trình</button>
+            </div>
+        </div>
+
+        <div id="page3" class="page">
+            <div class="decorative-frame">
+                <div class="badge">TIMELINE</div>
+                <h2>Lịch Trình</h2>
+                <p class="date">Ngày 22 tháng 2 năm 2026</p> 
+                
+                <ul class="timeline">
+                    <li>
+                        <time>07:30</time>
+                        <span>Thợ chụp có mặt & Tương tác lớp</span>
+                    </li>
+                    <li>
+                        <time>07:30 - 10:30</time>
+                        <span>Concept Cử Nhân & Áo Dài</span>
+                    </li>
+                    <li>
+                        <time>10:30 - 11:30</time>
+                        <span>Chụp cùng bạn bè,phụ huynh</span>
+                    </li>
+                    <li>
+                        <time>11:30 - 13:00</time>
+                        <span>Nghỉ trưa & Thay trang phục chiều</span>
+                    </li>
+                    <li>
+                        <time>13:00 - 17:30</time>
+                        <span>Concept Thanh Xuân (Chong chóng/Cờ)</span>
+                    </li>
+                    <li>
+                        <time>17:30 - 19:30</time>
+                        <span>Thanh Xuân Tối (Đèn chanh & Pháo điện)</span>
+                    </li>
+                    <li>
+                        <time>19:35</time>
+                        <span>Kết thúc buổi chụp</span>
+                    </li>
+                </ul>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn secondary" onclick="location.reload()">Đóng Thiệp</button>
+                </div>
+                <div class="footer-note">Designed by Phong Lê</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+<div id="film-overlay">
+    <div class="backdrop"></div>
+
+    <div class="film-track layer-1">
+        <div class="film-frame"><img src="anh1.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh2.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh3.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh4.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh5.jpg" alt=""></div>
+    </div>
+
+    <div class="film-track layer-2">
+        <div class="film-frame"><img src="anh1.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh2.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh3.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh4.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh5.jpg" alt=""></div>
+    </div>
+
+    <div class="film-track layer-3">
+        <div class="film-frame"><img src="anh1.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh2.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh3.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh4.jpg" alt=""></div>
+        <div class="film-frame"><img src="anh5.jpg" alt=""></div>
+    </div>
+</div>
+</body>
+</html>
