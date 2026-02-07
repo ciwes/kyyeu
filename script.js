@@ -1,4 +1,4 @@
-// DANH SÁCH KHÁCH MỜI
+// DANH SÁCH KHÁCH MỜI VÀ LỜI CHÚC
 const GUEST_LIST = {
     "HANADZ": {
         name: "Ngọc Hân",
@@ -59,31 +59,30 @@ function checkCode() {
     else if (input.startsWith("12A")) { guestKey = "12A"; }
 
     if (guestKey) {
-        // --- 1. KÍCH HOẠT HIỆU ỨNG PHIM NGAY LẬP TỨC ---
         const filmOverlay = document.getElementById('film-overlay');
         const errorDiv = document.getElementById('error');
         
+        // Ẩn lỗi, bật phim
         errorDiv.style.opacity = '0';
         filmOverlay.classList.add('active');
 
         const guest = GUEST_LIST[guestKey];
         
-        // --- 2. LOGIC CHUYỂN TRANG MƯỢT MÀ ---
+        // --- SỬA THỜI GIAN NGẮN HƠN TẠI ĐÂY ---
         
-        // Đợi 1.5 giây: Đổi nội dung ngầm khi bão phim đang mạnh nhất
+        // 1. Đổi nội dung cực nhanh: Chỉ đợi 0.7 giây (700ms)
         setTimeout(() => {
             document.getElementById('guest-name').innerText = "Gửi " + guest.name;
             document.getElementById('personal-msg').innerText = guest.msg;
             transitionPage('page1', 'page2');
-        }, 1500); 
+        }, 700); 
 
-        // Đợi 3 giây: Tắt phim để lộ nội dung
+        // 2. Tắt phim sau 1.5 giây (1500ms) -> Nhanh gấp đôi lúc nãy
         setTimeout(() => {
             filmOverlay.classList.remove('active');
-        }, 3000);
+        }, 1500);
 
     } else {
-        // --- XỬ LÝ LỖI ---
         errorDiv.style.opacity = '1';
         const frame = document.querySelector('#page1 .decorative-frame');
         frame.style.transform = 'translateX(10px)';
@@ -106,12 +105,11 @@ document.getElementById("access-code").addEventListener("keypress", function(e) 
     if (e.key === "Enter") checkCode();
 });
 
-// --- HIỆU ỨNG KÝ TỰ TOÁN HỌC BAY (MATH PARTICLES) ---
+// --- HIỆU ỨNG KÝ TỰ TOÁN HỌC BAY ---
 const canvas = document.getElementById('canvas-bg');
 const ctx = canvas.getContext('2d');
 let particlesArray;
 
-// Danh sách ký hiệu toán học xịn xò
 const mathSymbols = ['∑', '∫', 'π', '∞', '√', 'Δ', 'λ', 'θ', 'Ω', '∂', '∇', '∀', '∃', '∈', '∉', '⊂', '⊃', '∪', '∩', '∮', '∴', '∵', '⊥', '∥', '∠', 'ħ', 'Ψ', 'Φ', 'ζ', 'ξ', 'lim', 'log', 'ln', 'd/dx', '∫∫', 'e^x'];
 
 function resizeCanvas() {
@@ -149,7 +147,7 @@ class Particle {
 
 function initParticles() {
     particlesArray = [];
-    let numberOfParticles = 150; // Nhiều hạt bay
+    let numberOfParticles = 150; 
     for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle());
     }
