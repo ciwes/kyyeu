@@ -2,7 +2,7 @@
     --primary: #c5a059; /* Vàng kim loại */
     --primary-glow: rgba(197, 160, 89, 0.6);
     --bg-dark: #0b0d12;
-    --glass: rgba(20, 20, 25, 0.9); /* Kính tối màu */
+    --glass: rgba(20, 20, 25, 0.85); /* Kính tối màu */
     --glass-border: rgba(255, 255, 255, 0.15);
     --text-color: #f0f0f0;
 }
@@ -12,7 +12,6 @@
 body {
     font-family: 'Quicksand', sans-serif;
     background-color: var(--bg-dark);
-    /* Nền gradient tối sang trọng, không có lưới */
     background-image: radial-gradient(circle at center, rgba(30,30,40,0) 0%, #000000 100%);
     color: var(--text-color);
     overflow: hidden;
@@ -52,6 +51,7 @@ body {
 .page.active { opacity: 1; pointer-events: all; transform: translate(-50%, -50%) scale(1); }
 .page.exit { opacity: 0; transform: translate(-50%, -60%) scale(1.1); filter: blur(10px); }
 
+/* --- [MỚI] HIỆU ỨNG DI CHUỘT VÀO KHUNG CHÍNH --- */
 .decorative-frame {
     border: 1px solid rgba(197, 160, 89, 0.3);
     border-radius: 10px;
@@ -59,6 +59,16 @@ body {
     height: 100%;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     position: relative;
+    /* Thêm transition để mượt */
+    transition: all 0.4s ease;
+}
+
+/* Khi di chuột vào: Sáng viền, phóng to nhẹ, đổ bóng */
+.decorative-frame:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 30px rgba(197, 160, 89, 0.3), inset 0 0 20px rgba(197, 160, 89, 0.1);
+    transform: scale(1.02);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .badge {
@@ -80,12 +90,20 @@ h2 { font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 5px; fo
 .invitation-text { text-align: justify; margin-bottom: 25px; font-size: 1rem; padding: 0 10px; line-height: 1.6; }
 
 .input-group { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+
 input[type="text"] {
     background: rgba(0, 0, 0, 0.4); border: 1px solid var(--primary); padding: 15px;
     width: 100%; color: var(--primary); text-align: center; font-size: 1.1rem;
-    border-radius: 8px; outline: none; font-family: 'Cinzel', serif; transition: 0.3s; letter-spacing: 2px;
+    border-radius: 8px; outline: none; font-family: 'Cinzel', serif; 
+    transition: 0.3s; letter-spacing: 2px;
 }
-input[type="text"]:focus { box-shadow: 0 0 20px rgba(197, 160, 89, 0.3); border-color: #fff; }
+
+/* [MỚI] Input phát sáng khi focus */
+input[type="text"]:focus { 
+    box-shadow: 0 0 25px rgba(197, 160, 89, 0.5); 
+    border-color: #fff; 
+    background: rgba(0,0,0,0.6);
+}
 
 .btn {
     background: var(--primary); color: #000; border: none; padding: 15px 40px;
@@ -93,64 +111,50 @@ input[type="text"]:focus { box-shadow: 0 0 20px rgba(197, 160, 89, 0.3); border-
     transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; width: 100%;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-.btn:hover { background: #fff; box-shadow: 0 0 25px rgba(255, 255, 255, 0.5); transform: translateY(-2px); }
+.btn:hover { background: #fff; box-shadow: 0 0 25px rgba(255, 255, 255, 0.6); transform: translateY(-3px); }
 .btn.secondary { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 10px 30px; width: auto; }
-.btn.secondary:hover { background: rgba(197, 160, 89, 0.1); }
+.btn.secondary:hover { background: rgba(197, 160, 89, 0.1); box-shadow: 0 0 15px var(--primary-glow); }
 
+/* --- TIMELINE --- */
 .timeline { list-style: none; width: 100%; text-align: left; padding-left: 10px; margin-top: 10px; }
-.timeline li { position: relative; padding-left: 25px; margin-bottom: 20px; border-left: 2px solid rgba(197, 160, 89, 0.3); }
+
+.timeline li { 
+    position: relative; padding-left: 25px; margin-bottom: 20px; 
+    border-left: 2px solid rgba(197, 160, 89, 0.3);
+    /* [MỚI] Transition cho timeline */
+    transition: all 0.3s ease;
+}
+
+/* [MỚI] Hiệu ứng khi di chuột vào từng dòng timeline */
+.timeline li:hover {
+    transform: translateX(10px); /* Trượt sang phải */
+    border-left-color: var(--primary); /* Sáng đường kẻ dọc */
+}
+.timeline li:hover::before {
+    box-shadow: 0 0 15px var(--primary); /* Sáng chấm tròn */
+    background: #fff;
+}
+.timeline li:hover time {
+    text-shadow: 0 0 10px var(--primary);
+}
+
 .timeline li::before {
     content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px;
     background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary);
+    transition: 0.3s;
 }
-.timeline time { display: block; color: var(--primary); font-weight: 700; font-size: 0.9rem; }
+.timeline time { display: block; color: var(--primary); font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
 .timeline span { font-size: 1rem; color: #ddd; }
 
 .error-msg { color: #ff4d4d; font-size: 0.9rem; height: 20px; margin-top: 10px; opacity: 0; transition: opacity 0.3s; }
 .footer-note { margin-top: 20px; font-size: 0.7rem; opacity: 0.4; letter-spacing: 1px; }
-/* --- HIỆU ỨNG CUỘN PHIM (FILM STRIP) --- */
-#film-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: #000; /* Nền đen rạp phim */
-    z-index: 9999;
-    display: none; /* Ẩn mặc định */
-    align-items: center;
-    overflow: hidden;
-}
 
-.film-track {
-    display: flex;
-    gap: 15px;
-    padding: 0 50px;
-    /* Bắt đầu từ bên phải màn hình */
-    transform: translateX(120vw); 
-    will-change: transform;
-}
-
-.film-frame {
-    /* Tạo khung phim */
-    background: #000;
-    padding: 10px 5px;
-    border-top: 20px dashed #333; /* Lỗ xỏ phim bên trên */
-    border-bottom: 20px dashed #333; /* Lỗ xỏ phim bên dưới */
-    box-shadow: 0 0 10px rgba(255,255,255,0.1);
-}
-
-.film-frame img {
-    height: 250px; /* Chiều cao cố định */
-    width: 350px;  /* Chiều rộng ảnh */
-    object-fit: cover;
-    filter: sepia(0.3) contrast(1.2); /* Màu phim cũ */
-    display: block;
-}
-
-/* --- SUPER FILM TRANSITION STYLES --- */
+/* --- SUPER FILM TRANSITION STYLES (Đã gộp gọn gàng) --- */
 #film-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: 9999;
-    pointer-events: none; /* Không chặn chuột khi ẩn */
+    pointer-events: none; 
     opacity: 0;
     transition: opacity 0.3s;
     display: flex;
@@ -159,97 +163,59 @@ input[type="text"]:focus { box-shadow: 0 0 20px rgba(197, 160, 89, 0.3); border-
     overflow: hidden;
 }
 
-/* Khi kích hoạt thì hiện lên */
-#film-overlay.active {
-    opacity: 1;
-    pointer-events: all;
-}
+#film-overlay.active { opacity: 1; pointer-events: all; }
 
-/* Màn đen nền để che trang web cũ cho mượt */
 .backdrop {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.9); /* Đen gần như tuyệt đối */
+    background: rgba(0, 0, 0, 0.95);
     opacity: 0;
     transition: opacity 0.5s ease;
 }
 
-#film-overlay.active .backdrop {
-    opacity: 1;
-}
+#film-overlay.active .backdrop { opacity: 1; }
 
-/* Cấu trúc chung của dải phim */
 .film-track {
     position: absolute;
     display: flex;
     gap: 20px;
     padding: 10px 0;
-    width: max-content; /* Để dải phim dài vô tận */
+    width: max-content;
     will-change: transform;
-    opacity: 0; /* Ẩn mặc định */
+    opacity: 0; 
 }
 
 .film-frame {
-    background: #111;
-    padding: 10px 5px;
-    border-top: 15px dashed #444; /* Lỗ phim */
-    border-bottom: 15px dashed #444;
+    background: #111; padding: 10px 5px;
+    border-top: 15px dashed #444; border-bottom: 15px dashed #444;
     box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    transform: skewX(-5deg); /* Nghiêng nhẹ cho nghệ thuật */
+    transform: skewX(-5deg);
 }
 
 .film-frame img {
-    height: 180px; /* Chiều cao ảnh */
-    width: 280px;
-    object-fit: cover;
-    filter: sepia(0.4) contrast(1.1) grayscale(0.3); /* Màu phim cũ */
-    display: block;
+    height: 180px; width: 280px; object-fit: cover;
+    filter: sepia(0.4) contrast(1.1) grayscale(0.3);
+    display: block; box-shadow: 5px 0 10px rgba(0,0,0,0.5); 
 }
 
-/* --- CÁC HIỆU ỨNG CHUYỂN ĐỘNG (ANIMATIONS) --- */
-
-/* Bay từ Trái sang Phải */
+/* KEYFRAMES TỐC ĐỘ CAO */
 @keyframes slideRight {
-    0% { transform: translateX(-100%) scale(0.8); opacity: 0; }
-    10% { opacity: 1; }
-    100% { transform: translateX(120vw) scale(1.1); opacity: 1; }
+    0% { transform: translateX(-100%) scale(0.8) rotate(-5deg); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateX(120vw) scale(1.2) rotate(5deg); opacity: 1; }
 }
-
-/* Bay từ Phải sang Trái */
 @keyframes slideLeft {
-    0% { transform: translateX(120vw) scale(0.8); opacity: 0; }
-    10% { opacity: 1; }
-    100% { transform: translateX(-100%) scale(1.1); opacity: 1; }
+    0% { transform: translateX(120vw) scale(0.8) rotate(5deg); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateX(-100%) scale(1.2) rotate(-5deg); opacity: 1; }
 }
 
-/* --- CẤU HÌNH TỪNG LỚP (LAYER) --- */
+/* CẤU HÌNH LỚP (Chạy vô hạn - Infinite) */
+.layer-1 { top: 5%; left: 0; }
+#film-overlay.active .layer-1 { animation: slideRight 0.6s linear infinite; }
 
-/* Lớp 1: Trên cùng, bay nhanh */
-.layer-1 {
-    top: 5%;
-    left: 0;
-}
-#film-overlay.active .layer-1 {
-    animation: slideRight 1.5s cubic-bezier(0.6, 0, 0.2, 1) forwards;
-}
+.layer-2 { top: 35%; left: 0; z-index: 10; }
+.layer-2 .film-frame img { height: 220px; width: 340px; }
+#film-overlay.active .layer-2 { animation: slideLeft 0.7s linear infinite; animation-delay: 0.1s; }
 
-/* Lớp 2: Ở giữa, bay ngược chiều, chậm hơn chút, ảnh to hơn */
-.layer-2 {
-    top: 35%;
-    left: 0;
-    z-index: 10;
-}
-.layer-2 .film-frame img { height: 220px; width: 340px; } /* Ảnh giữa to hơn */
-#film-overlay.active .layer-2 {
-    animation: slideLeft 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;
-    animation-delay: 0.1s; /* Chạy sau lớp 1 xíu */
-}
-
-/* Lớp 3: Dưới cùng, bay nhanh */
-.layer-3 {
-    bottom: 10%;
-    left: 0;
-}
-#film-overlay.active .layer-3 {
-    animation: slideRight 1.6s cubic-bezier(0.6, 0, 0.2, 1) forwards;
-    animation-delay: 0.2s;
-}
+.layer-3 { bottom: 10%; left: 0; }
+#film-overlay.active .layer-3 { animation: slideRight 0.5s linear infinite; animation-delay: 0.2s; }
