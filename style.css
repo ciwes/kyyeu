@@ -219,3 +219,94 @@ input[type="text"]:focus {
 
 .layer-3 { bottom: 10%; left: 0; }
 #film-overlay.active .layer-3 { animation: slideRight 0.5s linear infinite; animation-delay: 0.2s; }
+/* --- PHẦN TỐI ƯU CHO ĐIỆN THOẠI (MOBILE RESPONSIVE) --- */
+@media screen and (max-width: 768px) {
+    
+    /* 1. Căn chỉnh khung chính */
+    .container {
+        width: 95%; /* Mở rộng khung ra sát viền hơn */
+        max-width: 100%;
+    }
+
+    .decorative-frame {
+        padding: 30px 15px; /* Giảm khoảng cách đệm để tiết kiệm diện tích */
+        
+        /* Trên điện thoại luôn sáng nhẹ viền cho đẹp (vì ko có chuột để hover) */
+        border-color: rgba(197, 160, 89, 0.6);
+        box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
+    }
+
+    /* 2. Cỡ chữ */
+    h1 {
+        font-size: 1.5rem; /* Tiêu đề nhỏ lại cho đỡ bị gãy dòng */
+        letter-spacing: 2px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .quote {
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+    }
+
+    .invitation-text {
+        font-size: 0.95rem; /* Chữ nội dung dễ đọc hơn */
+        text-align: left; /* Canh trái cho dễ đọc trên màn hình nhỏ */
+    }
+
+    /* 3. Ô nhập code & Nút bấm */
+    input[type="text"] {
+        font-size: 1rem; /* Cỡ chữ 16px để iPhone không tự zoom màn hình */
+        padding: 12px;
+    }
+
+    .btn {
+        padding: 12px 20px; /* Nút gọn hơn */
+        font-size: 0.9rem;
+    }
+
+    /* 4. Timeline (Lịch trình) */
+    .timeline {
+        padding-left: 0;
+    }
+    
+    .timeline li {
+        padding-left: 20px;
+        margin-bottom: 15px;
+    }
+
+    .timeline time {
+        font-size: 0.85rem;
+    }
+    
+    .timeline span {
+        font-size: 0.9rem;
+    }
+
+    /* 5. THU NHỎ DẢI PHIM (Quan trọng) */
+    /* Ảnh phim nhỏ lại để bay mượt hơn trên màn hình bé */
+    .film-frame {
+        border-top-width: 10px;
+        border-bottom-width: 10px;
+        padding: 5px 2px;
+    }
+
+    .film-frame img {
+        height: 100px; /* Giảm chiều cao ảnh */
+        width: 150px;  /* Giảm chiều rộng ảnh */
+    }
+
+    /* Điều chỉnh vị trí bay của các lớp phim cho màn hình dọc */
+    .layer-1 { top: 10%; }
+    .layer-2 { top: 30%; }
+    .layer-3 { bottom: 15%; }
+}
+
+/* Fix lỗi màn hình iPhone bị thanh địa chỉ che mất */
+@supports (-webkit-touch-callout: none) {
+    body {
+        height: -webkit-fill-available;
+    }
+}
