@@ -1,6 +1,6 @@
 // DANH SÁCH KHÁCH MỜI VÀ LỜI CHÚC (Giữ nguyên của Phong Lê)
 const GUEST_LIST = {
-"HANADZ": {
+"HANAYEUCUAPHONGLE": {
         name: "Ngọc Hân",
         msg: "Gửi Hân - ngoại lệ ngọt ngào nhất trong thanh xuân của tớ. Cảm ơn cậu đã xuất hiện, chịu đựng cái tính khí của tớ và biến những ngày tháng cấp 3 bình thường trở nên rực rỡ. Kỷ yếu chỉ là cái cớ, điều tớ muốn nhất là được cùng Hân lưu giữ khoảnh khắc tuổi 18 này mãi mãi. Hôm đó, hãy là cô gái rạng rỡ nhất và để tớ được đứng cạnh Hân trong mọi khung hình nhé!"
     },
@@ -177,4 +177,5 @@ function animateParticles() {
     requestAnimationFrame(animateParticles);
 }
 initParticles();
+
 animateParticles();
