@@ -59,30 +59,31 @@ function checkCode() {
     else if (input.startsWith("12A")) { guestKey = "12A"; }
 
     if (guestKey) {
+        // --- 1. BẬT HIỆU ỨNG PHIM ---
         const filmOverlay = document.getElementById('film-overlay');
         const errorDiv = document.getElementById('error');
         
-        // Ẩn lỗi, bật phim
         errorDiv.style.opacity = '0';
         filmOverlay.classList.add('active');
 
         const guest = GUEST_LIST[guestKey];
         
-        // --- SỬA THỜI GIAN NGẮN HƠN TẠI ĐÂY ---
+        // --- 2. LOGIC CHUYỂN TRANG 1.5s ---
         
-        // 1. Đổi nội dung cực nhanh: Chỉ đợi 0.7 giây (700ms)
+        // 0.7s: Đổi nội dung ngầm
         setTimeout(() => {
             document.getElementById('guest-name').innerText = "Gửi " + guest.name;
             document.getElementById('personal-msg').innerText = guest.msg;
             transitionPage('page1', 'page2');
         }, 700); 
 
-        // 2. Tắt phim sau 1.5 giây (1500ms) -> Nhanh gấp đôi lúc nãy
+        // 1.5s: Tắt phim
         setTimeout(() => {
             filmOverlay.classList.remove('active');
         }, 1500);
 
     } else {
+        // --- BÁO LỖI ---
         errorDiv.style.opacity = '1';
         const frame = document.querySelector('#page1 .decorative-frame');
         frame.style.transform = 'translateX(10px)';
@@ -105,7 +106,7 @@ document.getElementById("access-code").addEventListener("keypress", function(e) 
     if (e.key === "Enter") checkCode();
 });
 
-// --- HIỆU ỨNG KÝ TỰ TOÁN HỌC BAY ---
+// --- HIỆU ỨNG KÝ TỰ TOÁN HỌC (PHIÊN BẢN TỐI ƯU KHÔNG LAG) ---
 const canvas = document.getElementById('canvas-bg');
 const ctx = canvas.getContext('2d');
 let particlesArray;
@@ -115,43 +116,52 @@ const mathSymbols = ['∑', '∫', 'π', '∞', '√', 'Δ', 'λ', 'θ', 'Ω', '
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    initParticles();
 }
 window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
 
 class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 15 + 8; 
+        this.size = Math.random() * 14 + 10; 
         this.speedX = (Math.random() * 0.5) - 0.25;
         this.speedY = (Math.random() * 0.5) - 0.25;
-        this.opacity = Math.random() * 0.4 + 0.1;
-        this.symbol = mathSymbols[Math.floor(Math.random() * mathSymbols.length)]; 
+        this.symbol = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
+        this.angle = Math.random() * Math.PI * 2; 
+        this.blinkSpeed = 0.02 + Math.random() * 0.03; 
     }
+
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        if (Math.random() > 0.98) this.opacity = Math.random() * 0.4;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.y < 0) this.y = canvas.height;
-        if (this.y > canvas.height) this.y = 0;
+        this.angle += this.blinkSpeed;
+        this.opacity = 0.3 + Math.abs(Math.sin(this.angle)) * 0.7; // Hiệu ứng nhấp nháy
+
+        if (this.x < -20) this.x = canvas.width + 20;
+        if (this.x > canvas.width + 20) this.x = -20;
+        if (this.y < -20) this.y = canvas.height + 20;
+        if (this.y > canvas.height + 20) this.y = -20;
     }
+
     draw() {
-        ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`; 
-        ctx.font = `italic ${this.size}px serif`; 
-        ctx.fillText(this.symbol, this.x, this.y); 
+        // Dùng màu vàng kem sáng (thay vì shadowBlur) để giả lập neon mà không lag
+        ctx.fillStyle = `rgba(255, 230, 150, ${this.opacity})`; 
+        ctx.font = `italic bold ${this.size}px serif`; 
+        ctx.fillText(this.symbol, this.x, this.y);
     }
 }
 
 function initParticles() {
     particlesArray = [];
-    let numberOfParticles = 150; 
+    // Giảm số lượng hạt trên điện thoại để nhẹ máy
+    let numberOfParticles = (window.innerWidth < 768) ? 60 : 120;
+    
     for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle());
     }
 }
+
 function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < particlesArray.length; i++) {
@@ -160,5 +170,6 @@ function animateParticles() {
     }
     requestAnimationFrame(animateParticles);
 }
-initParticles();
+
+resizeCanvas();
 animateParticles();
