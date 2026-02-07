@@ -1,6 +1,6 @@
-// DANH SÁCH KHÁCH MỜI VÀ LỜI CHÚC (Giữ nguyên của Phong Lê)
+// DANH SÁCH KHÁCH MỜI
 const GUEST_LIST = {
-"HANAYEUCUAPHONGLE": {
+    "HANADZ": {
         name: "Ngọc Hân",
         msg: "Gửi Hân - ngoại lệ ngọt ngào nhất trong thanh xuân của tớ. Cảm ơn cậu đã xuất hiện, chịu đựng cái tính khí của tớ và biến những ngày tháng cấp 3 bình thường trở nên rực rỡ. Kỷ yếu chỉ là cái cớ, điều tớ muốn nhất là được cùng Hân lưu giữ khoảnh khắc tuổi 18 này mãi mãi. Hôm đó, hãy là cô gái rạng rỡ nhất và để tớ được đứng cạnh Hân trong mọi khung hình nhé!"
     },
@@ -10,7 +10,7 @@ const GUEST_LIST = {
     },
     "KHANH": {
         name: "Nguyễn Khánh",
-        msg: "Gửi Khánh, thằng bạn thân của tôi.Mấy năm qua cảm ơn ông đã luôn ở bên. Hôm đó nhớ đến sớm check-in với tao kiểu ảnh để đời nhé!"
+        msg: "Gửi Khánh, thằng bạn thân của tôi. Mấy năm qua cảm ơn ông đã luôn ở bên. Hôm đó nhớ đến sớm check-in với tao kiểu ảnh để đời nhé!"
     },
     "NINH26": {
         name: "Thái Ninh",
@@ -44,13 +44,10 @@ const GUEST_LIST = {
         name: "Cô Hải",
         msg: "Em chào Cô ạ! Cảm ơn Cô vì những bài giảng tuyệt vời. Sự hiện diện của Cô là niềm vui lớn cho chúng em trong ngày đặc biệt này."
     },
-    // Mã dự phòng chung
     "KYYEU": {
         name: "Cậu",
-        msg: "Chào mừng cậy đến với buổi kỷ yếu của tớ. Hãy cùng nhau tạo nên một cái kết thật đẹp cho thanh xuân này nhé!"
+        msg: "Chào mừng cậu đến với buổi kỷ yếu của tớ. Hãy cùng nhau tạo nên một cái kết thật đẹp cho thanh xuân này nhé!"
     }
-
-
 };
 
 function checkCode() {
@@ -61,42 +58,32 @@ function checkCode() {
     if (GUEST_LIST[input]) { guestKey = input; } 
     else if (input.startsWith("12A")) { guestKey = "12A"; }
 
-if (guestKey) {
+    if (guestKey) {
         // --- 1. KÍCH HOẠT HIỆU ỨNG PHIM NGAY LẬP TỨC ---
         const filmOverlay = document.getElementById('film-overlay');
         const errorDiv = document.getElementById('error');
         
-        // Ẩn lỗi nếu có
         errorDiv.style.opacity = '0';
-        
-        // Bật hiệu ứng phim (thêm class active)
         filmOverlay.classList.add('active');
 
-        // --- 2. XỬ LÝ DỮ LIỆU KHÁCH MỜI ---
         const guest = GUEST_LIST[guestKey];
         
-        // --- 3. LOGIC CHUYỂN TRANG MƯỢT MÀ ---
+        // --- 2. LOGIC CHUYỂN TRANG MƯỢT MÀ ---
         
-        // Đợi 800ms (0.8 giây): Lúc này màn hình đang đầy ảnh và đen thui
-        // Đây là thời điểm vàng để âm thầm đổi nội dung bên dưới
+        // Đợi 1.5 giây: Đổi nội dung ngầm khi bão phim đang mạnh nhất
         setTimeout(() => {
-            // Điền tên và lời chúc mới
             document.getElementById('guest-name').innerText = "Gửi " + guest.name;
             document.getElementById('personal-msg').innerText = guest.msg;
-            
-            // Chuyển class trang (lúc này người dùng không thấy do đang bị phim che)
             transitionPage('page1', 'page2');
-            
-        }, 800); 
+        }, 1500); 
 
-        // Đợi 2.2 giây: Khi phim đã bay hết ra khỏi màn hình
-        // Thì tắt lớp phủ đi để lộ ra Trang 2
+        // Đợi 3 giây: Tắt phim để lộ nội dung
         setTimeout(() => {
             filmOverlay.classList.remove('active');
-        }, 2200);
+        }, 3000);
 
     } else {
-        // ... (Giữ nguyên đoạn xử lý lỗi else) ...
+        // --- XỬ LÝ LỖI ---
         errorDiv.style.opacity = '1';
         const frame = document.querySelector('#page1 .decorative-frame');
         frame.style.transform = 'translateX(10px)';
@@ -124,7 +111,7 @@ const canvas = document.getElementById('canvas-bg');
 const ctx = canvas.getContext('2d');
 let particlesArray;
 
-// Danh sách các ký hiệu sẽ bay
+// Danh sách ký hiệu toán học xịn xò
 const mathSymbols = ['∑', '∫', 'π', '∞', '√', 'Δ', 'λ', 'θ', 'Ω', '∂', '∇', '∀', '∃', '∈', '∉', '⊂', '⊃', '∪', '∩', '∮', '∴', '∵', '⊥', '∥', '∠', 'ħ', 'Ψ', 'Φ', 'ζ', 'ξ', 'lim', 'log', 'ln', 'd/dx', '∫∫', 'e^x'];
 
 function resizeCanvas() {
@@ -138,11 +125,11 @@ class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 15 + 8; // Kích thước chữ
+        this.size = Math.random() * 15 + 8; 
         this.speedX = (Math.random() * 0.5) - 0.25;
         this.speedY = (Math.random() * 0.5) - 0.25;
         this.opacity = Math.random() * 0.4 + 0.1;
-        this.symbol = mathSymbols[Math.floor(Math.random() * mathSymbols.length)]; // Chọn ngẫu nhiên ký tự
+        this.symbol = mathSymbols[Math.floor(Math.random() * mathSymbols.length)]; 
     }
     update() {
         this.x += this.speedX;
@@ -154,16 +141,15 @@ class Particle {
         if (this.y > canvas.height) this.y = 0;
     }
     draw() {
-        ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`; // Màu vàng kim
-        // Dùng font có chân (serif) để ký hiệu trông trang trọng hơn
-        ctx.font = `${this.size}px serif`; 
-        ctx.fillText(this.symbol, this.x, this.y); // Vẽ ký tự
+        ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`; 
+        ctx.font = `italic ${this.size}px serif`; 
+        ctx.fillText(this.symbol, this.x, this.y); 
     }
 }
 
 function initParticles() {
     particlesArray = [];
-    let numberOfParticles = 70; // Số lượng ký tự bay
+    let numberOfParticles = 150; // Nhiều hạt bay
     for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle());
     }
@@ -177,5 +163,4 @@ function animateParticles() {
     requestAnimationFrame(animateParticles);
 }
 initParticles();
-
 animateParticles();
