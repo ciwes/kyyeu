@@ -34,11 +34,11 @@ const GUEST_LIST = {
     },
     "ANNH26": {
         name: "Annh Pham",
-        msg: "Chào Banh, đã lâu không gặp. Rất mong cậu có thể bớt chút thời gian đến chung vui và chụp cùng tớ và lớp vài kiểu ảnh kỷ niệm."
+        msg: "Chào Banh, đã lâu không gặp. Rất mong cậu có thể bớt chút thời gian đến chung vui và chụp cùng tớ vài kiểu ảnh kỷ niệm."
     },
     "THAYLICHVIPPRO": {
         name: "Thầy Lịch",
-        msg: "Em chào Thầy ạ! Em cảm ơn Thầy đã dẫn dắt chúng em suốt thời gian qua. Chúng em rất mong Thầy đến tham dự chụp ảnh cùng tập thể lớp ạ."
+        msg: "Em chào Thầy ạ! Em cảm ơn Thầy đã dẫn dắt chúng em suốt thời gian qua.Em rất mong Thầy đến tham dự chụp ảnh cùng tập thể lớp ạ."
     },
     "COHAI": {
         name: "Cô Hải",
@@ -173,3 +173,4 @@ function animateParticles() {
 
 resizeCanvas();
 animateParticles();
+
